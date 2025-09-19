@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Tìm kiếm bài viết</title>
+  <style>
+    body { font-family: "Segoe UI", sans-serif; background: #f5fdfd; padding: 40px; }
+    .search-box { width: 100%; max-width: 500px; margin: 0 auto; position: relative; }
+    #searchInput {
+      width: 100%; padding: 12px 16px; border: 2px solid #2b7a78;
+      border-radius: 30px; font-size: 16px; outline: none;
+      transition: all 0.3s ease; background: #f0fdfd;
+    }
+    #searchInput:focus { border-color: #3aafa9; box-shadow: 0 0 8px rgba(58,175,169,0.5); }
+    #results {
+      position: absolute; top: 50px; left: 0; width: 100%; background: white;
+      border: 1px solid #ddd; border-radius: 12px; max-height: 300px; overflow-y: auto;
+      display: none; box-shadow: 0 4px 10px rgba(0,0,0,0.1); z-index: 99;
+    }
+    #results a {
+      display: block; padding: 12px 16px; text-decoration: none; color: #222;
+      border-bottom: 1px solid #eee; transition: background 0.2s;
+    }
+    #results a:hover { background: #e0f7f7; color: #005f5f; }
+    #results .no-result { padding: 12px 16px; color: #777; font-style: italic; }
+  </style>
+</head>
+<body>
+  <div class="search-box">
+    <input type="text" id="searchInput" placeholder="🔍 Tìm bài viết...">
+    <div id="results"></div>
+  </div>
+
+  <script>
+    const posts = [
+      { title: "Nhịp thở kinh tế", url: "/nhip-tho-kinh-te", keywords: ["Kinh tế","Hải Phòng"] },
+      { title: "Dòng chảy kinh tế", url: "/dong-chay-kinh-te", keywords: ["GRDP","tăng trưởng"] },
+      { title: "Động lực phát triển", url: "/dong-luc-phat-trien", keywords: ["Công nghiệp","Khu kinh tế"] },
+      { title: "Bến cảng phồn hoa", url: "/ben-cang-phon-hoa", keywords: ["Cảng biển","Logistics"] },
+      { title: "Cánh cửa hội nhập", url: "/canh-cua-hoi-nhap", keywords: ["FDI","xuất nhập khẩu"] },
+      { title: "Kinh tế xanh – Biển xanh", url: "/kinh-te-xanh-bien-xanh", keywords: ["Biển xanh","Môi trường"] },
+      { title: "Nhà hát Lớn Hải Phòng", url: "/nha-hat-lon", keywords: ["Kiến trúc Pháp","Văn hóa"] },
+      { title: "Đền thờ Chu Văn An", url: "/den-tho-chu-van-an", keywords: ["Chu Văn An","Hiếu học"] },
+      { title: "Hoa phượng vĩ", url: "/hoa-phuong-vi", keywords: ["Phượng đỏ","Biểu tượng"] },
+      { title: "Hồ Bạch Đằng", url: "/ho-bach-dang", keywords: ["Chiến thắng","Thắng cảnh"] },
+      { title: "Làng gốm Chu Đậu", url: "/lang-gom-chu-dau", keywords: ["Chu Đậu","Gốm truyền thống"] },
+      { title: "Bãi biển Đồ Sơn", url: "/bai-bien-do-son", keywords: ["Du lịch","Lễ hội","Hải sản"] },
+      { title: "Địa hình và khí hậu", url: "/tu-nhien-dia-hinh", keywords: ["Địa hình","Khí hậu"] },
+      { title: "Sông ngòi và thủy văn", url: "/tu-nhien-song-ngoithuy-van", keywords: ["Sông ngòi","Thủy văn"] },
+      { title: "Biển đảo và hệ sinh thái", url: "/tu-nhien-bien-dao", keywords: ["Cát Bà","Sinh quyển"] },
+      { title: "Hồn phố cảng", url: "/hon-pho-cang", keywords: ["Văn hóa","Con người"] },
+      { title: "Dấu xưa – Nếp nay", url: "/dau-xua-nep-nay", keywords: ["Di sản","Lịch sử"] },
+      { title: "Dòng lễ hội dân gian", url: "/dong-le-hoi", keywords: ["Lễ hội","Hát đúm"] },
+      { title: "Sắc màu phố cảng", url: "/sac-mau-pho-cang", keywords: ["Ẩm thực","Phượng đỏ"] },
+      { title: "Tri thức và nhân ái", url: "/dong-chay-tri-thuc", keywords: ["Giáo dục","Y tế","An sinh"] },
+      { title: "Gương mặt và câu chuyện", url: "/nhung-nguoi-hai-phong", keywords: ["Con người","Lao động","Nghệ nhân"] }
+    ];
+
+    const input = document.getElementById("searchInput");
+    const resultsBox = document.getElementById("results");
+    input.addEventListener("keyup", function() {
+      const query = this.value.toLowerCase();
+      if (query.length === 0) { resultsBox.style.display = "none"; return; }
+      const filtered = posts.filter(p =>
+        p.title.toLowerCase().includes(query) ||
+        p.keywords.some(k => k.toLowerCase().includes(query))
+      );
+      if (filtered.length > 0) {
+        resultsBox.innerHTML = filtered.map(r => `<a href="${r.url}">${r.title}</a>`).join("");
+        resultsBox.style.display = "block";
+      } else {
+        resultsBox.innerHTML = `<div class="no-result">🌱 Không tìm thấy kết quả</div>`;
+        resultsBox.style.display = "block";
+      }
+    });
+  </script>
+</body>
+</html>
